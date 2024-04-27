@@ -2,6 +2,7 @@ using LoanApi.Repositories.Implementation;
 using LoanApi.Repositories.Interface;
 using LoanApi.Service.Implementation;
 using LoanApi.Service.Interface;
+using Shared.Repositories.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient <IBranchService,BranchService>();
 builder.Services.AddTransient<IBranchRepository, BranchRepository>();
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddTransient<IGenericRepository, GenericRepositroy>();
+builder.Services.AddTransient<IDapperRepository, DapperRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

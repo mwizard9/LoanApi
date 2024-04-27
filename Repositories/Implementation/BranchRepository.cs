@@ -1,5 +1,6 @@
 ﻿using LoanApi.Api.Models;
 using LoanApi.Api.RequestModel;
+using LoanApi.Api.ResponseModel;
 using LoanApi.Repositories.Interface;
 using System.Net.NetworkInformation;
 
@@ -13,7 +14,7 @@ namespace LoanApi.Repositories.Implementation
             _configuration = configuration;
         }
 
-        public async Task CreateBranchAsync(BranchRequestModal branch)
+        public async Task CreateBranchAsync(BranchModel branch)
         {
             var result = await this.ExecuteAsync("insert into tblBranch(BranchCode,BranchName,Address,PhoneNo,status,CreatedDate)" + "values(@BranchCode,@BranchName,@Address,@PhoneNo,@status,@CreatedDate)",
             new
@@ -27,6 +28,14 @@ namespace LoanApi.Repositories.Implementation
 
             }
                 );
+        }
+
+        public async Task<List<BranchResponseModal>> GetBranchAsync()
+        {
+            var BranchList = await this.GetQueryResultAsync<BranchResponseModal>(
+                "select * from tblBranch"
+                );
+            return BranchList;
         }
     }
 }
